@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'ModernUpperNotificationView_Example' do
+  pod 'ModernUpperNotificationView', :path => '../'
+
+  target 'ModernUpperNotificationView_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
