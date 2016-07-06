@@ -1,0 +1,25 @@
+PODS:
+  - Cartography (0.6.0)
+  - ModernUpperNotificationView (0.1.0):
+    - Cartography (~> 0.6)
+    - UpperNotificationController (~> 0.1.0)
+  - Reveal-iOS-SDK (1.6.2)
+  - UpperNotificationController (0.1.0)
+
+DEPENDENCIES:
+  - ModernUpperNotificationView (from `../`)
+  - Reveal-iOS-SDK
+
+EXTERNAL SOURCES:
+  ModernUpperNotificationView:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  Cartography: 70af183a248547694a8cfaa6b989cb7e04589985
+  ModernUpperNotificationView: 0dcb8d4656ee6f57eeab45c21976404c7de53295
+  Reveal-iOS-SDK: e2250b3c155bcfac53ae223ddc1f76d08f206c33
+  UpperNotificationController: 793fabe73590a5c45a6646ab0816eed981888e00
+
+PODFILE CHECKSUM: 82678ba9bccf0afa637393cb87014fcaebb2fd45
+
+COCOAPODS: 1.0.1

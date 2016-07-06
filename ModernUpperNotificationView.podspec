@@ -21,22 +21,17 @@ Pod::Spec.new do |s|
 TODO: Add long description of the pod here.
                        DESC
 
-  s.homepage         = 'https://github.com/<GITHUB_USERNAME>/ModernUpperNotificationView'
+  s.homepage         = 'https://github.com/muukii0803/ModernUpperNotificationView'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'muukii' => 'm@muukii.me' }
-  s.source           = { :git => 'https://github.com/<GITHUB_USERNAME>/ModernUpperNotificationView.git', :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
+  s.source           = { :git => 'https://github.com/muukii0803/ModernUpperNotificationView.git', :tag => s.version.to_s }
+  s.social_media_url = 'https://twitter.com/muukii0803'
 
   s.ios.deployment_target = '8.0'
 
   s.source_files = 'ModernUpperNotificationView/Classes/**/*'
-  
-  # s.resource_bundles = {
-  #   'ModernUpperNotificationView' => ['ModernUpperNotificationView/Assets/*.png']
-  # }
 
-  # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
+  s.dependency 'UpperNotificationController', '~> 0.1.0'
+  s.dependency 'Cartography', '~> 0.6'
 end
