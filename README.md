@@ -5,11 +5,34 @@
 [![License](https://img.shields.io/cocoapods/l/ModernUpperNotificationView.svg?style=flat)](http://cocoapods.org/pods/ModernUpperNotificationView)
 [![Platform](https://img.shields.io/cocoapods/p/ModernUpperNotificationView.svg?style=flat)](http://cocoapods.org/pods/ModernUpperNotificationView)
 
+![](sample.gif)
+![](sample1.png)
+![](sample2.png)
+![](sample3.png)
+
+
 ## Example
 
-To run the example project, clone the repo, and run `pod install` from the Example directory first.
+```swift
+let notificationController = UpperNotificationController()
+notificationController.windowLevel = UIWindowLevelStatusBar
+
+let notification = NotificationContext<ModernUpperNotificationView> {
+    let view = ModernUpperNotificationView(
+        text: "Failure...",
+        iconImage: UIImage(named: "OvalRed")!,
+        tap: {
+            print("tap: failure")
+    })
+    return view
+}
+
+notificationController.deliver(notification: notification)
+```
 
 ## Requirements
+
+iOS 8.0 +
 
 ## Installation
 

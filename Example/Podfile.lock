@@ -1,14 +1,20 @@
 PODS:
   - Cartography (0.6.0)
+  - GCDKit (1.2.5)
   - ModernUpperNotificationView (0.1.0):
     - Cartography (~> 0.6)
+    - GCDKit
     - UpperNotificationController (~> 0.1.0)
   - Reveal-iOS-SDK (1.6.2)
-  - UpperNotificationController (0.1.0)
+  - TextAttributes (0.3.1)
+  - TextAttributesUtil (0.1.1):
+    - TextAttributes (~> 0.3)
+  - UpperNotificationController (0.1.2)
 
 DEPENDENCIES:
   - ModernUpperNotificationView (from `../`)
   - Reveal-iOS-SDK
+  - TextAttributesUtil
 
 EXTERNAL SOURCES:
   ModernUpperNotificationView:
@@ -16,10 +22,13 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Cartography: 70af183a248547694a8cfaa6b989cb7e04589985
-  ModernUpperNotificationView: 0dcb8d4656ee6f57eeab45c21976404c7de53295
+  GCDKit: ed6646fcf761ff139162aaac518b9ec1fb7aa720
+  ModernUpperNotificationView: 959047f08a531c8b21d593298e6ce476a9ab5924
   Reveal-iOS-SDK: e2250b3c155bcfac53ae223ddc1f76d08f206c33
-  UpperNotificationController: 793fabe73590a5c45a6646ab0816eed981888e00
+  TextAttributes: b43233c6356a72f1c1e483d5bda694535432a4be
+  TextAttributesUtil: 7ecad02c7cdf68f57f7e98f3578442fcc833e97d
+  UpperNotificationController: a2cee56c43ecc13c62bc7950a5fb9dfe7cf40b0c
 
-PODFILE CHECKSUM: 82678ba9bccf0afa637393cb87014fcaebb2fd45
+PODFILE CHECKSUM: 274cdb3d966ea6d4882ced664900930c0197f3a1
 
 COCOAPODS: 1.0.1

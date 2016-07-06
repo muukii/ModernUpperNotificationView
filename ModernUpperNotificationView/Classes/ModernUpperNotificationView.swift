@@ -9,8 +9,19 @@
 import Foundation
 import UpperNotificationController
 import Cartography
+import GCDKit
 
-public class ModernUpperNotificationView: UIView, UpperNotificationViewType {
+public extension UpperNotificationController {
+    
+    public func deliver(notification notification: NotificationContext<ModernUpperNotificationView>) {
+        
+        deliver(notification: notification, animator: ModernUpperNotificationAnimator())
+    }
+}
+
+public final class ModernUpperNotificationView: UIView, UpperNotificationViewType {
+    
+    public var tap: (() -> Void)?
     
     public var iconImage: UIImage? {
         get {
@@ -30,6 +41,33 @@ public class ModernUpperNotificationView: UIView, UpperNotificationViewType {
         }
     }
     
+    public var textColor: UIColor? {
+        get {
+            return textLabel.textColor
+        }
+        set {
+            textLabel.textColor = newValue
+        }
+    }
+    
+    public var font: UIFont? {
+        get {
+            return textLabel.font
+        }
+        set {
+            textLabel.font = newValue
+        }
+    }
+    
+    public var textAlignment: NSTextAlignment {
+        get {
+            return textLabel.textAlignment
+        }
+        set {
+            textLabel.textAlignment = newValue
+        }
+    }
+    
     public var attributedText: NSAttributedString? {
         get {
             return textLabel.attributedText
@@ -39,16 +77,89 @@ public class ModernUpperNotificationView: UIView, UpperNotificationViewType {
         }
     }
     
+    public convenience init(attributedText: NSAttributedString, iconImage: UIImage, tap: () -> Void) {
+        self.init()
+        self.attributedText = attributedText
+        self.iconImage = iconImage
+        self.tap = tap
+    }
+    
+    public convenience init(text: String, iconImage: UIImage, tap: () -> Void) {
+        self.init()
+        self.text = text
+        self.iconImage = iconImage
+        self.tap = tap
+    }
+    
     public convenience init() {
-        self.init(frame: CGRect(x: 0, y: 0, width: 320, height: 54))
+        self.init(frame: .zero)
     }
     
     public override init(frame: CGRect) {
         super.init(frame: frame)
         
+        setupView()
+        setupGesture()
+    }
+    
+    public override func layoutSublayersOfLayer(layer: CALayer) {
+        super.layoutSublayersOfLayer(layer)
+        
+        shadowLayer.masksToBounds = false
+        shadowLayer.frame = visualEffectView.layer.frame
+        shadowLayer.shadowColor = UIColor(white: 0, alpha: 0.2).CGColor
+        shadowLayer.shadowOpacity = 1
+        shadowLayer.shadowOffset = CGSize(width: 0, height: 0)
+        shadowLayer.shadowRadius = 5
+        shadowLayer.shadowPath = UIBezierPath(roundedRect: visualEffectView.layer.bounds, cornerRadius: visualEffectView.layer.cornerRadius).CGPath
+    }
+    
+    public required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    public func didPrepare(dismissClosure: () -> Void) {
+        
+        self.dismissClosure = dismissClosure
+        GCDBlock.after(.Main, delay: 2) {
+            guard self.dragging == false else {
+                return
+            }
+            dismissClosure()
+            self.dismissClosure = nil
+        }
+    }
+    
+    public func willAppear() {
+        
+    }
+    
+    public func didAppear() {
+        
+    }
+    
+    public func willDisappear() {
+        
+    }
+    
+    public func didDisappear() {
+        
+    }
+    
+    // MARK: - Private
+    
+    private let textLabel = UILabel()
+    private let iconImageView = UIImageView()
+    private let shadowLayer = CALayer()
+    private let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .ExtraLight))
+    private var dismissClosure: (() -> Void)?
+    private var dragging: Bool = false
+    
+    private func setupView() {
+        self.layer.addSublayer(shadowLayer)
+        
         backgroundColor = UIColor.clearColor()
         
-        let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .ExtraLight))
         visualEffectView.layer.masksToBounds = true
         visualEffectView.layer.cornerRadius = 12
         
@@ -76,7 +187,7 @@ public class ModernUpperNotificationView: UIView, UpperNotificationViewType {
         
         constrain(iconImageView, textLabel) { iconImageView, textLabel in
             let superview = iconImageView.superview!
-        
+            
             iconImageView.width == 32
             iconImageView.height == iconImageView.height
             iconImageView.left == superview.left + 17
@@ -88,32 +199,67 @@ public class ModernUpperNotificationView: UIView, UpperNotificationViewType {
         }
     }
     
-    public required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    private func setupGesture() {
+        
+        let dragGesture = UIPanGestureRecognizer(target: self, action: #selector(handleDragGesture(_ :)))
+        addGestureRecognizer(dragGesture)
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(_ :)))
+        addGestureRecognizer(tapGesture)
     }
+    
+    private dynamic func handleTapGesture(gesture: UITapGestureRecognizer) {
+        
+        if case .Ended = gesture.state {
+            tap?()
+            tap = nil
+            dismissClosure?()
+            dismissClosure = nil
+        }
+    }
+    
+    private dynamic func handleDragGesture(gesture: UIPanGestureRecognizer) {
+        
+        switch gesture.state {
+        case .Began:
+            
+            dragging = true
+        case .Ended, .Cancelled:
+            
+            dragging = false
+            
+            if self.layer.frame.minY < -(self.layer.frame.height / 3) {
+                
+                self.dismissClosure?()
+                self.dismissClosure = nil
+            }
+            else {
+                
+                UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0, options: [.BeginFromCurrentState, .AllowUserInteraction], animations: {
+                    
+                    self.transform = CGAffineTransformIdentity
 
-    public func didPrepare(dismissClosure: () -> Void) {
+                    }, completion: { (finish) in
+                        GCDBlock.after(.Main, delay: 2) {
+                            guard self.dragging == false else {
+                                return
+                            }
+                            self.dismissClosure?()
+                            self.dismissClosure = nil
+                        }
+                })
+            }
+        default:
+            
+            let inView = gesture.translationInView(self)
+            self.transform = CGAffineTransformTranslate(self.transform, 0, inView.y)
+            
+            if self.layer.frame.minY > 0 {
+                self.transform = CGAffineTransformIdentity
+            }
+        }
         
+        gesture.setTranslation(CGPoint.zero, inView: self)
     }
-    
-    public func willAppear() {
-        
-    }
-    
-    public func didAppear() {
-        
-    }
-    
-    public func willDisappear() {
-        
-    }
-    
-    public func didDisappear() {
-        
-    }
-    
-    // MARK: - Private
-    
-    private let textLabel = UILabel()
-    private let iconImageView = UIImageView()
 }
+

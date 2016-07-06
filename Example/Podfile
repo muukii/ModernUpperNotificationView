@@ -3,6 +3,7 @@ use_frameworks!
 target 'ModernUpperNotificationView_Example' do
   pod 'ModernUpperNotificationView', :path => '../'
   pod 'Reveal-iOS-SDK'
+  pod 'TextAttributesUtil'
 
   target 'ModernUpperNotificationView_Tests' do
     inherit! :search_paths

@@ -34,4 +34,5 @@ TODO: Add long description of the pod here.
 
   s.dependency 'UpperNotificationController', '~> 0.1.0'
   s.dependency 'Cartography', '~> 0.6'
+  s.dependency 'GCDKit'
 end
