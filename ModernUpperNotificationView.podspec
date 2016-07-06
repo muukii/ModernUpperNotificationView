@@ -14,7 +14,7 @@ Pod::Spec.new do |s|
   s.screenshots      = 'https://raw.githubusercontent.com/muukii/ModernUpperNotificationView/master/sample1.png'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'muukii' => 'm@muukii.me' }
-  s.source           = { :git => 'https://github.com/muukii0803/ModernUpperNotificationView.git', :tag => s.version.to_s }
+  s.source           = { :git => 'https://github.com/muukii/ModernUpperNotificationView.git', :tag => s.version.to_s }
   s.social_media_url = 'https://twitter.com/muukii0803'
 
   s.ios.deployment_target = '8.0'
