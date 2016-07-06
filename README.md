@@ -5,6 +5,9 @@
 [![License](https://img.shields.io/cocoapods/l/ModernUpperNotificationView.svg?style=flat)](http://cocoapods.org/pods/ModernUpperNotificationView)
 [![Platform](https://img.shields.io/cocoapods/p/ModernUpperNotificationView.svg?style=flat)](http://cocoapods.org/pods/ModernUpperNotificationView)
 
+ModernUpperNotificationView is simple notification view.
+powered by [UpperNotificationController](https://github.com/muukii/UpperNotificationController)
+
 ![](sample.gif)
 ![](sample1.png)
 ![](sample2.png)
