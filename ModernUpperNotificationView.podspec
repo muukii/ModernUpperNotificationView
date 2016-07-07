@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'ModernUpperNotificationView'
-  s.version          = '0.1.0'
+  s.version          = '0.1.1'
   s.summary          = 'Simple notification view in app. Powered by UpperNotificationController'
   s.homepage         = 'https://github.com/muukii0803/ModernUpperNotificationView'
   s.screenshots      = 'https://raw.githubusercontent.com/muukii/ModernUpperNotificationView/master/sample1.png'
