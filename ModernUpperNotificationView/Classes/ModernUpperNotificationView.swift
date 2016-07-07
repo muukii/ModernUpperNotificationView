@@ -182,8 +182,8 @@ public final class ModernUpperNotificationView: UIView, UpperNotificationViewTyp
         iconImageView.translatesAutoresizingMaskIntoConstraints = false
         iconImageView.contentMode = .Center
         
-        visualEffectView.addSubview(textLabel)
-        visualEffectView.addSubview(iconImageView)
+        visualEffectView.contentView.addSubview(textLabel)
+        visualEffectView.contentView.addSubview(iconImageView)
         
         constrain(iconImageView, textLabel) { iconImageView, textLabel in
             let superview = iconImageView.superview!
