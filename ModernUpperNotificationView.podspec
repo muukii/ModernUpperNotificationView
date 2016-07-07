@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
   s.name             = 'ModernUpperNotificationView'
   s.version          = '0.1.1'
   s.summary          = 'Simple notification view in app. Powered by UpperNotificationController'
-  s.homepage         = 'https://github.com/muukii0803/ModernUpperNotificationView'
+  s.homepage         = 'https://github.com/muukii/ModernUpperNotificationView'
   s.screenshots      = 'https://raw.githubusercontent.com/muukii/ModernUpperNotificationView/master/sample1.png'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'muukii' => 'm@muukii.me' }
