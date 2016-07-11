@@ -23,6 +23,15 @@ public final class ModernUpperNotificationView: UIView, UpperNotificationViewTyp
     
     public var tap: (() -> Void)?
     
+    public var effect: UIVisualEffect? {
+        get {
+            return visualEffectView.effect
+        }
+        set {
+            visualEffectView.effect = newValue
+        }
+    }
+    
     public var iconImage: UIImage? {
         get {
             return iconImageView.image
