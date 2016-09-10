@@ -8,7 +8,7 @@
 
 import Foundation
 import UpperNotificationController
-import Cartography
+import EasyPeasy
 import GCDKit
 
 public extension UpperNotificationController {
@@ -176,16 +176,10 @@ public final class ModernUpperNotificationView: UIView, UpperNotificationViewTyp
         
         addSubview(visualEffectView)
         
-        constrain(visualEffectView) {
-            let superview = $0.superview!
-            
-            $0.top == superview.top + 8
-            $0.right == superview.right - 8
-            $0.bottom == superview.bottom - 8
-            $0.left == superview.left + 8
-            
-            $0.height == 54
-        }
+        visualEffectView <- [
+            Edges(8),
+            Height(64),
+        ]
         
         textLabel.translatesAutoresizingMaskIntoConstraints = false
         iconImageView.translatesAutoresizingMaskIntoConstraints = false
@@ -194,18 +188,17 @@ public final class ModernUpperNotificationView: UIView, UpperNotificationViewTyp
         visualEffectView.contentView.addSubview(textLabel)
         visualEffectView.contentView.addSubview(iconImageView)
         
-        constrain(iconImageView, textLabel) { iconImageView, textLabel in
-            let superview = iconImageView.superview!
-            
-            iconImageView.width == 32
-            iconImageView.height == iconImageView.height
-            iconImageView.left == superview.left + 17
-            iconImageView.centerY == superview.centerY
-            
-            textLabel.left == iconImageView.right + 10
-            textLabel.right == superview.right - 17
-            textLabel.centerY == superview.centerY
-        }
+        iconImageView <- [
+            Size(32),
+            Left(16),
+            CenterY(),
+        ]
+        
+        textLabel <- [
+            Left(10).to(iconImageView, .Right),
+            Right(16),
+            CenterY(),
+        ]
     }
     
     private func setupGesture() {

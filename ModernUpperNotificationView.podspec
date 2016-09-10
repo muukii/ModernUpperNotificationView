@@ -22,6 +22,6 @@ Pod::Spec.new do |s|
   s.source_files = 'ModernUpperNotificationView/Classes/**/*'
 
   s.dependency 'UpperNotificationController', '~> 0.1.0'
-  s.dependency 'Cartography', '~> 0.6'
+  s.dependency 'EasyPeasy'
   s.dependency 'GCDKit'
 end
