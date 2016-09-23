@@ -1,0 +1,12 @@
+[submodule "Carthage/Checkouts/UpperNotificationController"]
+	path = Carthage/Checkouts/UpperNotificationController
+	url = https://github.com/muukii/UpperNotificationController.git
+[submodule "Carthage/Checkouts/EasyPeasy"]
+	path = Carthage/Checkouts/EasyPeasy
+	url = https://github.com/nakiostudio/EasyPeasy.git
+[submodule "Carthage/Checkouts/TextAttributes"]
+	path = Carthage/Checkouts/TextAttributes
+	url = https://github.com/delba/TextAttributes.git
+[submodule "Carthage/Checkouts/TextAttributesUtil"]
+	path = Carthage/Checkouts/TextAttributesUtil
+	url = https://github.com/muukii/TextAttributesUtil.git

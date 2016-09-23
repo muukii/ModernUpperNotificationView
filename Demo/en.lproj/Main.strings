@@ -1,0 +1,9 @@
+
+/* Class = "UIButton"; normalTitle = "Warning"; ObjectID = "4Gh-iD-0tx"; */
+"4Gh-iD-0tx.normalTitle" = "Warning";
+
+/* Class = "UIButton"; normalTitle = "Success"; ObjectID = "6rf-et-MPg"; */
+"6rf-et-MPg.normalTitle" = "Success";
+
+/* Class = "UIButton"; normalTitle = "Failure"; ObjectID = "Fjz-oW-1Ac"; */
+"Fjz-oW-1Ac.normalTitle" = "Failure";

@@ -1,0 +1,4 @@
+github "nakiostudio/EasyPeasy" "1.4"
+github "delba/TextAttributes" "v1.0"
+github "muukii/UpperNotificationController" "0.2.0"
+github "muukii/TextAttributesUtil" "1.0.2"

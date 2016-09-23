@@ -29,13 +29,13 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    @IBAction func success(sender: AnyObject) {
+    @IBAction func success(_ sender: AnyObject) {
         
         let notification = NotificationContext<ModernUpperNotificationView> {
             let view = ModernUpperNotificationView(
                 attributedText: "Success!".attributed {
                     TextAttributes()
-                        .foregroundColor(UIColor.darkGrayColor())
+                        .foregroundColor(UIColor.darkGray)
                 },
                 iconImage: UIImage(named: "OvalBlue")!,
                 tap: {
@@ -47,13 +47,13 @@ class ViewController: UIViewController {
         notificationController.deliver(notification: notification)
     }
     
-    @IBAction func failure(sender: AnyObject) {
+    @IBAction func failure(_ sender: AnyObject) {
         
         let notification = NotificationContext<ModernUpperNotificationView> {
             let view = ModernUpperNotificationView(
                 attributedText: "Failure...".attributed {
                     TextAttributes()
-                        .foregroundColor(UIColor.darkGrayColor())
+                        .foregroundColor(UIColor.darkGray)
                 },
                 iconImage: UIImage(named: "OvalRed")!,
                 tap: {
@@ -66,13 +66,13 @@ class ViewController: UIViewController {
     }
 
     
-    @IBAction func warning(sender: AnyObject) {
+    @IBAction func warning(_ sender: AnyObject) {
         
         let notification = NotificationContext<ModernUpperNotificationView> {
             let view = ModernUpperNotificationView(
                 attributedText: "Warning: ".attributed {
                     TextAttributes()
-                        .foregroundColor(UIColor.darkGrayColor())
+                        .foregroundColor(UIColor.darkGray)
                 },
                 iconImage: UIImage(named: "OvalGreen")!,
                 tap: {

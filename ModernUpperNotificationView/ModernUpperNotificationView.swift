@@ -7,13 +7,13 @@
 //
 
 import Foundation
+
+import EasyPeasy
 import UpperNotificationController
-import Cartography
-import GCDKit
 
 public extension UpperNotificationController {
     
-    public func deliver(notification notification: NotificationContext<ModernUpperNotificationView>) {
+    public func deliver(notification: NotificationContext<ModernUpperNotificationView>) {
         
         deliver(notification: notification, animator: ModernUpperNotificationAnimator())
     }
@@ -77,14 +77,14 @@ public final class ModernUpperNotificationView: UIView, UpperNotificationViewTyp
         }
     }
     
-    public convenience init(attributedText: NSAttributedString, iconImage: UIImage, tap: () -> Void) {
+    public convenience init(attributedText: NSAttributedString, iconImage: UIImage, tap: @escaping () -> Void) {
         self.init()
         self.attributedText = attributedText
         self.iconImage = iconImage
         self.tap = tap
     }
     
-    public convenience init(text: String, iconImage: UIImage, tap: () -> Void) {
+    public convenience init(text: String, iconImage: UIImage, tap: @escaping () -> Void) {
         self.init()
         self.text = text
         self.iconImage = iconImage
@@ -102,26 +102,26 @@ public final class ModernUpperNotificationView: UIView, UpperNotificationViewTyp
         setupGesture()
     }
     
-    public override func layoutSublayersOfLayer(layer: CALayer) {
-        super.layoutSublayersOfLayer(layer)
+    public override func layoutSublayers(of layer: CALayer) {
+        super.layoutSublayers(of: layer)
         
         shadowLayer.masksToBounds = false
         shadowLayer.frame = visualEffectView.layer.frame
-        shadowLayer.shadowColor = UIColor(white: 0, alpha: 0.2).CGColor
+        shadowLayer.shadowColor = UIColor(white: 0, alpha: 0.2).cgColor
         shadowLayer.shadowOpacity = 1
         shadowLayer.shadowOffset = CGSize(width: 0, height: 0)
         shadowLayer.shadowRadius = 5
-        shadowLayer.shadowPath = UIBezierPath(roundedRect: visualEffectView.layer.bounds, cornerRadius: visualEffectView.layer.cornerRadius).CGPath
+        shadowLayer.shadowPath = UIBezierPath(roundedRect: visualEffectView.layer.bounds, cornerRadius: visualEffectView.layer.cornerRadius).cgPath
     }
-    
+
     public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    public func didPrepare(dismissClosure: () -> Void) {
+    public func didPrepare(_ dismissClosure: @escaping () -> Void) {
         
         self.dismissClosure = dismissClosure
-        GCDBlock.after(.Main, delay: 2) {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(2)) {
             guard self.dragging == false else {
                 return
             }
@@ -151,66 +151,57 @@ public final class ModernUpperNotificationView: UIView, UpperNotificationViewTyp
     private let textLabel = UILabel()
     private let iconImageView = UIImageView()
     private let shadowLayer = CALayer()
-    private let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .ExtraLight))
+    private let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .extraLight))
     private var dismissClosure: (() -> Void)?
     private var dragging: Bool = false
     
     private func setupView() {
         self.layer.addSublayer(shadowLayer)
         
-        backgroundColor = UIColor.clearColor()
+        backgroundColor = UIColor.clear
         
         visualEffectView.layer.masksToBounds = true
         visualEffectView.layer.cornerRadius = 12
         
-        visualEffectView.translatesAutoresizingMaskIntoConstraints = false
-        
         addSubview(visualEffectView)
         
-        constrain(visualEffectView) {
-            let superview = $0.superview!
-            
-            $0.top == superview.top + 8
-            $0.right == superview.right - 8
-            $0.bottom == superview.bottom - 8
-            $0.left == superview.left + 8
-            
-            $0.height == 54
-        }
+        visualEffectView <- [
+            Edges(8),
+            Height(54),
+        ]
         
-        textLabel.translatesAutoresizingMaskIntoConstraints = false
-        iconImageView.translatesAutoresizingMaskIntoConstraints = false
-        iconImageView.contentMode = .Center
+        iconImageView.contentMode = .center
         
         visualEffectView.addSubview(textLabel)
         visualEffectView.addSubview(iconImageView)
         
-        constrain(iconImageView, textLabel) { iconImageView, textLabel in
-            let superview = iconImageView.superview!
-            
-            iconImageView.width == 32
-            iconImageView.height == iconImageView.height
-            iconImageView.left == superview.left + 17
-            iconImageView.centerY == superview.centerY
-            
-            textLabel.left == iconImageView.right + 10
-            textLabel.right == superview.right - 17
-            textLabel.centerY == superview.centerY
-        }
+        
+        iconImageView <- [
+            Size(32),
+            Left(17),
+            CenterY(),
+        ]
+        
+        textLabel <- [
+            Left(10).to(iconImageView, .right),
+            Right(17),
+            CenterY(),
+        ]
+
     }
     
     private func setupGesture() {
         
-        let dragGesture = UIPanGestureRecognizer(target: self, action: #selector(handleDragGesture(_ :)))
+        let dragGesture = UIPanGestureRecognizer(target: self, action: #selector(ModernUpperNotificationView.handleDragGesture(gesture :)))
         addGestureRecognizer(dragGesture)
         
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(_ :)))
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(ModernUpperNotificationView.handleTapGesture(gesture:)))
         addGestureRecognizer(tapGesture)
     }
     
     private dynamic func handleTapGesture(gesture: UITapGestureRecognizer) {
         
-        if case .Ended = gesture.state {
+        if case .ended = gesture.state {
             tap?()
             tap = nil
             dismissClosure?()
@@ -221,10 +212,10 @@ public final class ModernUpperNotificationView: UIView, UpperNotificationViewTyp
     private dynamic func handleDragGesture(gesture: UIPanGestureRecognizer) {
         
         switch gesture.state {
-        case .Began:
+        case .began:
             
             dragging = true
-        case .Ended, .Cancelled:
+        case .ended, .cancelled:
             
             dragging = false
             
@@ -235,12 +226,13 @@ public final class ModernUpperNotificationView: UIView, UpperNotificationViewTyp
             }
             else {
                 
-                UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0, options: [.BeginFromCurrentState, .AllowUserInteraction], animations: {
+                UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0, options: [.beginFromCurrentState, .allowUserInteraction], animations: {
                     
-                    self.transform = CGAffineTransformIdentity
+                    self.transform = .identity
 
                     }, completion: { (finish) in
-                        GCDBlock.after(.Main, delay: 2) {
+                        
+                        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(2)) {
                             guard self.dragging == false else {
                                 return
                             }
@@ -251,15 +243,15 @@ public final class ModernUpperNotificationView: UIView, UpperNotificationViewTyp
             }
         default:
             
-            let inView = gesture.translationInView(self)
-            self.transform = CGAffineTransformTranslate(self.transform, 0, inView.y)
+            let inView = gesture.translation(in: self)
+            transform = transform.translatedBy(x: 0, y: inView.y)
             
             if self.layer.frame.minY > 0 {
-                self.transform = CGAffineTransformIdentity
+                self.transform = .identity
             }
         }
         
-        gesture.setTranslation(CGPoint.zero, inView: self)
+        gesture.setTranslation(CGPoint.zero, in: self)
     }
 }
 
