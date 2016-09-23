@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'ModernUpperNotificationView'
-  s.version          = '0.1.0'
+  s.version          = '0.3.0'
   s.summary          = 'Simple notification view in app. Powered by UpperNotificationController'
   s.homepage         = 'https://github.com/muukii0803/ModernUpperNotificationView'
   s.screenshots      = 'https://raw.githubusercontent.com/muukii/ModernUpperNotificationView/master/sample1.png'
@@ -19,9 +19,8 @@ Pod::Spec.new do |s|
 
   s.ios.deployment_target = '8.0'
 
-  s.source_files = 'ModernUpperNotificationView/Classes/**/*'
+  s.source_files = 'ModernUpperNotificationView/**/*.swift'
 
   s.dependency 'UpperNotificationController', '~> 0.1.0'
-  s.dependency 'Cartography', '~> 0.6'
-  s.dependency 'GCDKit'
+  s.dependency 'EasyPeasy'
 end
